@@ -7,8 +7,8 @@ def HashPIM(sim: Simulator, m: int, n: int):
     """
     Performs the HashPIM algorithm of SHA-3.
     :param sim: the simulation environment
-    :param m: the number of rows in each partition
-    :param n: the number of columns in each partition
+    :param m: the number of rows in each SHA-3 unit
+    :param n: the number of columns in each SHA-3 unit
     """
 
     b = 1600
@@ -46,11 +46,13 @@ def HashPIM(sim: Simulator, m: int, n: int):
     sim.kc = sim.kc - 1
     sim.kr = sim.kr - 1
 
+    # Storing the round constants (RC) used in Iota step, in the crossbar array 
     for j in range(w):
         for ir in range(Rnd):
             for rp in range(sim.kr):
                 sim.memory[sim.relToAbsRow(rp, j), sim.col_partition_starts[sim.kc] + ir] = int(format((RC[ir]),'064b')[w-j-1])
 
+    # Storing the rotation values (ROT) used in Rho step, in the crossbar array 
     for j in range(b // w):
         for cp in range(sim.kc):
             for i in range(ceil(log2(w))):
@@ -71,14 +73,16 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
     """
     Performs the HashPIM algorithm of SHA-3.
     :param sim: the simulation environment
-    :param m: the number of rows in each partition
-    :param n: the number of columns in each partition
-    :param ir: the Keccak-f round
+    :param m: the number of rows in each SHA-3 unit
+    :param n: the number of columns in each SHA-3 unit
+    :param ir: the Keccak-f round iterator
+    :param Rnd: Keccak-f total rounds
+    :param w: the Keccak-f lane length
+    :param b: the Keccak-f internal state length
     """
     
     x = 5
     y = 5
-
 
     rc = list(range(sim.col_partition_starts[sim.kc], sim.col_partition_starts[sim.kc] + Rnd))
     rot = list(range(sim.row_partition_starts[sim.kr], sim.row_partition_starts[sim.kr] + ceil(log2(w))))
@@ -91,7 +95,13 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
     row_mask2 = sum([[j + col_intermediates[5] + sim.col_partition_starts[cp] for j in range(5)] for cp in range(sim.kc)], [])
 
 
-    ## THETA Step
+    '''
+    THETA Step: 
+        C[x] = A[x][0] ^ A[x][1] ^ A[x][2] ^ A[x][3] ^ A[x][4]
+        C_r[x] = C[x] <<< 1
+        D[x] = C[x-1] ^ C_r[x+1]
+        A[x][y] = A[x][y] ^ D[x]
+    '''
 
     A = [[i + 5 * j for j in range(y)] for i in range(x)]
 
@@ -99,10 +109,10 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
     INIT1(sim, col_intermediates, GateDirection.IN_ROW, col_mask)
     INIT1(sim, row_intermediates, GateDirection.IN_COLUMN, row_mask1)
 
-    # C[x] = A[x][0] ^ A[x][1] ^ A[x][2] ^ A[x][3] ^ A[x][4]
     C = col_intermediates[0:x]
     C_r = col_intermediates[x:2*x]
     
+    # C[x] = A[x][0] ^ A[x][1] ^ A[x][2] ^ A[x][3] ^ A[x][4]
     for i in range(x):
         XOR(sim, A[i][0], A[i][1], col_intermediates[5], GateDirection.IN_ROW, col_mask)
         XOR(sim, A[i][2], A[i][3], col_intermediates[6], GateDirection.IN_ROW, col_mask)
@@ -113,14 +123,14 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
     INIT0(sim, [col_intermediates[10]], GateDirection.IN_ROW, col_mask)
     INIT1(sim, C_r, GateDirection.IN_ROW, col_mask)
 
-    # Copy C[x]
+    # Copy C[x] to C_r[x]
     for i in range(x):
         OR(sim, C[i], col_intermediates[10], C_r[i], GateDirection.IN_ROW, col_mask)
 
     INIT0(sim, [row_intermediates[1]], GateDirection.IN_COLUMN, row_mask2)
     INIT1(sim, [row_intermediates[0]], GateDirection.IN_COLUMN, row_mask2)
 
-    # Rotation C[x] <<< 1
+    # C_r[x] = C_r[x] <<< 1
     for i in range(w):
         OR(sim, row_intermediates[0] - i - 1, row_intermediates[1], row_intermediates[0] - i, GateDirection.IN_COLUMN, row_mask2)
         INIT1(sim, [row_intermediates[0] - i - 1], GateDirection.IN_COLUMN, row_mask2)
@@ -141,18 +151,26 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
             OR(sim, C[(i-1)%x], col_intermediates[11], A[i][j], GateDirection.IN_ROW, col_mask)
 
 
-    ## Rho Step
+    '''
+    RHO Step: 
+        A[x][y] = A[x][y] <<< rot[x][y]
+    '''
 
     INIT0(sim, [row_intermediates[0]], GateDirection.IN_COLUMN, row_mask1)
 
+    # Serially coping each selector bit, out of log(64)=6 bits, from the rotation map (ROT) to each unit
     for i in range(ceil(log2(w))):
         INIT1(sim, row_intermediates[1:5], GateDirection.IN_COLUMN, row_mask1)
         for rp in range(sim.kr):
             sim.perform(ParallelOperation([Operation(GateType.OR, GateDirection.IN_COLUMN,
                             [rot[i], sim.r-1], [sim.relToAbsRow(rp, row_intermediates[1])], row_mask1)]))
             
+        # Storing a copy of the inverted selector bit
         NOT(sim, row_intermediates[1], row_intermediates[2], GateDirection.IN_COLUMN, row_mask1)
 
+        # For bit l in lane with corresponding x,y: 
+        # d1 = l[x][y]
+        # d0 = l[x][y] <<< 2 ** ROT_i[x]
         d1 = sim.row_partition_starts[0]
         d0 = (d1 + 2 ** i) % w
 
@@ -161,6 +179,8 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
 
         is_rot = [False]*w
 
+        # Implementing MUX operation in parallel for each 64-bit lane:
+        # MUX(d0, d1, sel) = NOR(NOR(d0, sel), NOR(d1, NOT(sel)))
         for j in range(w):
             if is_rot[d0] is True:
                 d0 += 1
@@ -175,14 +195,14 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
                 OR(sim, d0, row_intermediates[0], row_intermediates[3], GateDirection.IN_COLUMN, row_mask1)
                 INIT1(sim, [d0], GateDirection.IN_COLUMN, row_mask1)
                 MUX2(sim, row_intermediates[3], row_intermediates[4], row_intermediates[1], row_intermediates[2], 
-                    d0, row_intermediates[5:7], GateDirection.IN_COLUMN, row_mask1)
+                        d0, row_intermediates[5:7], GateDirection.IN_COLUMN, row_mask1)
 
             else:
                 INIT1(sim, [row_intermediates[4]], GateDirection.IN_COLUMN, row_mask1)
                 OR(sim, d0, row_intermediates[0], row_intermediates[4], GateDirection.IN_COLUMN, row_mask1)
                 INIT1(sim, [d0], GateDirection.IN_COLUMN, row_mask1)
                 MUX2(sim, row_intermediates[4], row_intermediates[3], row_intermediates[1], row_intermediates[2], 
-                    d0, row_intermediates[5:7], GateDirection.IN_COLUMN, row_mask1)
+                        d0, row_intermediates[5:7], GateDirection.IN_COLUMN, row_mask1)
 
             is_rot[d0] = True
 
@@ -190,7 +210,10 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
             d0 = (d0 + 2 ** i) % w
 
 
-    ## Pi Step
+    '''
+    PI Step: 
+        A[y][2x+3y] = A[x][y]
+    '''
 
     INIT0(sim, [col_intermediates[-1]], GateDirection.IN_ROW, col_mask)
     INIT1(sim, col_intermediates[:-1], GateDirection.IN_ROW, col_mask)
@@ -199,6 +222,10 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
     curr_x = 1
     curr_y = 0
 
+    # Storing each lane, A[x][y], (starting with A[1][0]) along with the target lane A[y][2x+3y] at the intermediates area.
+    # Placing A[x][y] at the target place. 
+    # Same process executed for A[y][2x+3y], and for all lanes (except from A[0][0]).
+    
     OR(sim, A[curr_x][curr_y], col_intermediates[-1], col_intermediates[temp_i], GateDirection.IN_ROW, col_mask)
 
     for i in range(b // w - 1):
@@ -221,7 +248,12 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
         temp_i += 1
 
 
-    ## Chi Step
+    '''
+    CHI Step:
+        A[x][y] = A[x][y] ^ ~(A[x+1][y] + ~A[x+2][y])
+
+    Note that we implied De Morgan's law on the original implementation: A[x][y] = A[x][y] ^ (~A[x+1][y] * A[x+2][y]).
+    '''
 
     for j in range(y):
         INIT1(sim, col_intermediates[:-1], GateDirection.IN_ROW, col_mask)
@@ -246,14 +278,18 @@ def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int)
             OR(sim, col_intermediates[i], col_intermediates[-1], A[i][j], GateDirection.IN_ROW, col_mask)
 
 
-    ## Iota Step
+    '''
+    IOTA Step:
+        A[0][0] = A[0][0] ^ RC[i]
+    '''
 
-    # A[0][0] = A[0][0] ^ RC[i]
     INIT1(sim, col_intermediates[:2], GateDirection.IN_ROW, col_mask)
     
+    # Coping the round constant (RC) to each unit
     for cp in range(sim.kc):
         sim.perform(ParallelOperation([Operation(GateType.OR, GateDirection.IN_ROW,
                     [rc[ir], sim.c-1], [sim.relToAbsCol(cp, col_intermediates[0])], col_mask)]))
+
     XOR(sim, A[0][0], col_intermediates[0], col_intermediates[1], GateDirection.IN_ROW, col_mask)
     INIT1(sim, [A[0][0]], GateDirection.IN_ROW, col_mask)
     OR(sim, col_intermediates[1], col_intermediates[-1], A[0][0], GateDirection.IN_ROW, col_mask)
