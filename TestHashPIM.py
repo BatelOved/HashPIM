@@ -1,8 +1,9 @@
 import torch
+import random
 from simulator import Simulator
 from HashPIM import *
-from Cryptodome.Hash import SHA3_256
-import random
+from Cryptodome.Hash import SHA3_224, SHA3_256, SHA3_384, SHA3_512
+
 
 
 device = torch.device('cpu')
@@ -17,7 +18,7 @@ def fromBitsToHex(bit_array):
     return ''.join(chars)
 
 
-def testHashPIM():
+def testHashPIM(r: int, digest: int):
     """
     Tests the HashPIM algorithm
     """
@@ -28,7 +29,6 @@ def testHashPIM():
     col = 1024
     kc = 27
     b = 1600
-    r = 1088
     w = 64
     m = 72
     n = 37
@@ -36,11 +36,10 @@ def testHashPIM():
     r_u = 14
     c_u = 27
     N_u = r_u * c_u
-    digest = 256
 
 
-    print(f'HashPIM: SHA3-256')
-    print(f'Parameters: rows={row}, columns={col}, SHA-3 units={N_u}, w={w}, b={b}, digest={digest}')
+    print(f'HashPIM: SHA3-{digest}')
+    print(f'Parameters: rows={row}, columns={col}, SHA-3 units={N_u}, w={w}, b={b}, r={r}, digest={digest}')
 
 
     sim = Simulator([m] * kr + [row - m * kr], [n] * kc + [col - n * kc], device=device)
@@ -67,7 +66,17 @@ def testHashPIM():
             message_in_bytes = [int(byte) for byte in message_in_bytes]
             message_in_bytes = bytearray(message_in_bytes)
 
-            hash_value[i][j] = (SHA3_256.new(message_in_bytes)).hexdigest()
+            if digest == 224:
+                hash_value[i][j] = (SHA3_224.new(message_in_bytes)).hexdigest()
+
+            elif digest == 256:
+                hash_value[i][j] = (SHA3_256.new(message_in_bytes)).hexdigest()
+
+            elif digest == 384:
+                hash_value[i][j] = (SHA3_384.new(message_in_bytes)).hexdigest()
+
+            elif digest == 512:
+                hash_value[i][j] = (SHA3_512.new(message_in_bytes)).hexdigest()
 
 
     # Store the vectors in the memory
@@ -85,10 +94,16 @@ def testHashPIM():
     output = [[0 for i in range(c_u)] for j in range(r_u)]
     temp = [0] * digest
 
+
     for r_i in range(r_u):
-        for c_i in range(c_u):       
-            for i in range(w):
-                for j in range(digest // w):
+        for c_i in range(c_u):
+            cnt = 0
+            for j in range((digest // w) + 1):       
+                for i in range(w):
+                    cnt += 1
+                    if cnt > digest:
+                        break
+                
                     temp[i+w*j] = int(sim.memory[i+r_i*m][j+c_i*n])
                     output[r_i][c_i] = fromBitsToHex(temp)
 
@@ -100,8 +115,3 @@ def testHashPIM():
 
     print(f'Success with {sim.latency} cycles and {sim.energy} energy\n')
     print(f'Single SHA-3 unit 1 round evaluation: {sim.latency//Rnd} cycles and {sim.energy//(N_u*Rnd)} energy\n')
-
-
-
-if __name__ == "__main__":
-    testHashPIM()
