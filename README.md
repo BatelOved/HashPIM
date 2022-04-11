@@ -9,9 +9,9 @@ This is a logic simulator to verify the theoretical results (latency, energy, an
 | ---- | :----: | :----: | :----: | :----: | :----: |
 | HashPIM | 3,494 | 119,571 | 1024<sup>2</sup> | 378 | XOR/NOR/NOT/OR |
 
-The results for a single round:
+The results for a single unit, for one SHA3 round (out of 24):
 
-| Step | Latency (Cycles) | Swithches |
+| Step | Latency (Cycles) | Switches |
 | :---- | :----: | :----: |
 | Theta | TBD | TBD |
 | Rho | TBD | TBD |
@@ -19,8 +19,6 @@ The results for a single round:
 | Chi | TBD | TBD |
 | Iota | TBD | TBD |
 | Total | 3,494 | 119,571 |
-
-Note that the latency and the number of switches per a single unit, for one SHA3 round (out of 24), are evaluated.
 
 ## User Information
 ### Dependencies
