@@ -13,11 +13,11 @@ The results for a single unit, for one SHA3 round (out of 24):
 
 | Step | Latency (Cycles) | Switches |
 | :---- | :----: | :----: |
-| Theta | TBD | TBD |
-| Rho | TBD | TBD |
-| Pi | TBD | TBD |
-| Chi | TBD | TBD |
-| Iota | TBD | TBD |
+| Theta | 330 | 15,127 |
+| Rho | 2,911 | 82,300 |
+| Pi | 81 | 6,976 |
+| Chi | 140 | 14,720 |
+| Iota | 32 | 448 |
 | Total | 3,494 | 119,571 |
 
 ## User Information
