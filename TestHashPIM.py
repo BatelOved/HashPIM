@@ -113,5 +113,5 @@ def testHashPIM(r: int, digest: int):
             assert(output[i][j] == hash_value[i][j])
 
 
-    print(f'Success with {sim.latency} cycles and {sim.energy} energy\n')
-    print(f'Single SHA-3 unit 1 round evaluation: {sim.latency//Rnd} cycles and {sim.energy//(N_u*Rnd)} energy\n')
+    print(f'Success with {sim.latency} cycles and {sim.energy} switches\n')
+    print(f'Single SHA-3 unit 1 round evaluation: {sim.latency//Rnd} cycles and {sim.energy//(N_u*Rnd)} switches\n')
