@@ -39,7 +39,7 @@ def testHashPIM(r: int, digest: int):
 
 
     print(f'HashPIM: SHA3-{digest}')
-    print(f'Parameters: rows={row}, columns={col}, SHA-3 units={N_u}, w={w}, b={b}, r={r}, digest={digest}\n')
+    print(f'Parameters: rows={row}, columns={col}, SHA-3 units={N_u}, r={r}, digest={digest}\n')
 
 
     sim = Simulator([m] * kr + [row - m * kr], [n] * kc + [col - n * kc], device=device)
@@ -114,5 +114,5 @@ def testHashPIM(r: int, digest: int):
 
 
     print(f'Success with total {sim.latency} cycles and {sim.energy} gates\n')
-    print(f'Single XB one round evaluation: {sim.latency//Rnd} cycles and {sim.energy//Rnd} gates')
-    print(f'Single SHA-3 unit one round evaluation: {sim.latency//Rnd} cycles and {sim.energy//(N_u*Rnd)} gates\n')
+    print(f'Single XB (1 round): {sim.latency//Rnd} cycles and {sim.energy//Rnd} gates')
+    print(f'Single Unit (1 round): {sim.latency//Rnd} cycles and {sim.energy//(N_u*Rnd)} gates\n')
