@@ -21,7 +21,7 @@ The results for a single unit, for one SHA3 round (out of 24):
 | Total | 3,494 | 119,571 |
 
 ## Evaluation
-<img src="https://latex.codecogs.com/svg.image?Tput_{Unit}=\frac{r}{Latency_{Round}}*f&space;\\\\Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}&space;\\\\Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}&space;" title="https://latex.codecogs.com/svg.image?Tput_{Unit}=\frac{r}{Latency_{Round}}*f \\\\Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB} \\\\Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r} " />
+<img src="https://latex.codecogs.com/svg.image?\bg{black}{\color{DarkBlue}&space;Tput_{Unit}=\frac{r}{Latency_{Round}}*f}&space;\\\\{\color{DarkBlue}&space;Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}}&space;\\\\{\color{DarkBlue}&space;Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" title="https://latex.codecogs.com/svg.image?\bg{black}{\color{DarkBlue} Tput_{Unit}=\frac{r}{Latency_{Round}}*f} \\\\{\color{DarkBlue} Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}} \\\\{\color{DarkBlue} Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" />
 
 ## User Information
 ### Dependencies
