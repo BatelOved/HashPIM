@@ -30,8 +30,8 @@ The results for a single unit, for one SHA3 round (out of 24):
 | 65nm ASIC [1] | 1K | 48 | - | 7,619 |
 | SHINE-1 [2] | 2K | 33.4 | 263 | 21,916 |
 | SHINE-2 [2] | 2K | 54 | 311 | 22,227 |
-| **HashPIM (1 XB)** |/2. 333 | 39.2 |/2. 1,422 |/2. 9,354 |
-| **HashPIM (2 XB)** | 78.4 |
+| **HashPIM (1 XB)** | 333 | 39.2 | 1,422 | 9,354 |
+| **HashPIM (2 XB)** | ^ | 78.4 | ^ | ^ |
 
 ## User Information
 ### Dependencies
