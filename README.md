@@ -29,41 +29,41 @@ The results for a single unit, for one SHA3 round (out of 24):
   <tr>
     <th>Work</th>
     <th><i>f</i> (MHz)</th>
-    <th>Throughput (Gbps)</th>
-    <th>Throughput/Watt (Gbps/W)</th>
-    <th>Throughput/Area (Gbps/F<sup>2</sup>)</th>
+    <th>Tput (Gbps)</th>
+    <th>Tput/W (Gbps/W)</th>
+    <th>Tput/Area (Gbps/F<sup>2</sup>)</th>
   </tr>
   <tr>
-    <td>65nm ASIC [1]</td>
-    <td>1K</td>
-    <td>48</td>
-    <td>-</td>
-    <td>7,619</td>
+    <td align="left">65nm ASIC [1]</td>
+    <td align="center">1K</td>
+    <td align="center">48</td>
+    <td align="center">-</td>
+    <td align="center">7,619</td>
   </tr>
   <tr>
-    <td>SHINE-1 [2]</td>
-    <td>2K</td>
-    <td>54</td>
-    <td>263</td>
-    <td>21,916</td>
+    <td align="left">SHINE-1 [2]</td>
+    <td align="center">2K</td>
+    <td align="center">54</td>
+    <td align="center">263</td>
+    <td align="center">21,916</td>
   </tr>
   <tr>
-    <td>SHINE-2 [2]</td>
-    <td>2K</td>
-    <td>33.4</td>
-    <td>311</td>
-    <td>22,227</td>
+    <td align="left">SHINE-2 [2]</td>
+    <td align="center">2K</td>
+    <td align="center">33.4</td>
+    <td align="center">311</td>
+    <td align="center">22,227</td>
   </tr>
   <tr>
-    <td><b>HashPIM (1 XB)</b></td>
+    <td align="left"><b>HashPIM (1 XB)</b></td>
     <td rowspan="2" align="center"><b>333</b></td>
-    <td><b>39.2</b></td>
+    <td align="center"><b>39.2</b></td>
     <td rowspan="2" align="center"><b>1,422</b></td>
     <td rowspan="2" align="center"><b>9,354</b></td>
   </tr>
   <tr>
-    <td><b>HashPIM (2 XB)</b></td>
-    <td><b>78.4</b></td>
+    <td align="left"><b>HashPIM (2 XB)</b></td>
+    <td align="center"><b>78.4</b></td>
   </tr>
 </table>
 
