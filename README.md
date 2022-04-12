@@ -1,12 +1,12 @@
 # HashPIM: Accelerating SHA-3 Algorithm with Memristive Stateful Logic
 ## Overview
-This is a logic simulator to verify the theoretical results (latency, energy, and area) of HashPIM. This logic simulator models a memristive crossbar array with partitions, and then simulates running the HashPIM algorithm. The correctness of the operations is verified externally, and the number of cycles is measured, including initialization cycles.
+This is a logic simulator to verify the theoretical results (latency, energy, and area) of HashPIM, a hardware design for the implementation of SHA3-224, SHA3-256, SHA3-384, SHA3-512. This logic simulator models a memristive crossbar array with partitions, and then simulates running the HashPIM algorithm. The correctness of the operations is verified externally, and the number of cycles is measured, including initialization cycles.
 
 `B. Oved, O. Leitersdorf, R. Ronen, and S. Kvatinsky, “HashPIM: High-Throughput SHA-3 via Memristive Digital Processing-in-Memory,” 2022.`
 
 ## Results
 
-The results for one SHA3 round (out of 24):
+The results for a single crossbar (*XB*) for one SHA3 round (out of 24):
 
 <table>
   <tr>
@@ -97,6 +97,8 @@ The results for each SHA3 step for a single round:
     <td align="center"><b>78.4</b></td>
   </tr>
 </table>
+
+Note: our design was calculated for a single *XB*, containing 378 *Unit*s, to compare performance on a single SHA3-256 round, corresponding to *r*=1088.
 
 
 ## User Information
