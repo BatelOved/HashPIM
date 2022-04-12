@@ -21,7 +21,7 @@ The results for a single unit, for one SHA3 round (out of 24):
 | Total | 3,494 | 119,571 |
 
 ## Evaluation
-https://latex.codecogs.com/svg.image?Tput_%7BUnit%7D=%5Cfrac%7Br%7D%7BLatency_%7BRound%7D%7D*f%20%5C%5C%5C%5CTput_%7BSystem%7D=Tput_%7BUnit%7D*U_%7BXB%7D*N_%7BXB%7D%20%5C%5C%5C%5CPower_%7BSystem%7D=%5Cfrac%7BTput_%7BSystem%7D*Energy_%7BUnit%7D%7D%7Br%7D%20
+<img src="https://latex.codecogs.com/svg.image?Tput_{Unit}=\frac{r}{Latency_{Round}}*f&space;\\\\Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}&space;\\\\Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}&space;" title="https://latex.codecogs.com/svg.image?Tput_{Unit}=\frac{r}{Latency_{Round}}*f \\\\Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB} \\\\Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r} " />
 
 ## User Information
 ### Dependencies
