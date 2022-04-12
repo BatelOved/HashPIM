@@ -25,13 +25,48 @@ The results for a single unit, for one SHA3 round (out of 24):
 
 ### Performance Comparison of SHA-3 Hardware Designs:
 
-| Work | Frequency (MHz) | Throughput (Gbps) | Throughput/Watt (Gbps/W) | Throughput/Area (Gbps/F<sup>2</sup>) |
-| :---- | :----: | :----: | :----: | :----: |
-| 65nm ASIC [1] | 1K | 48 | - | 7,619 |
-| SHINE-1 [2] | 2K | 33.4 | 263 | 21,916 |
-| SHINE-2 [2] | 2K | 54 | 311 | 22,227 |
-| **HashPIM (1 XB)** | 333 | 39.2 | 1,422 | 9,354 |
-| **HashPIM (2 XB)** | ^ | 78.4 | ^ | ^ |
+<table>
+  <tr>
+    <th>Work</th>
+    <th>Frequency (MHz)</th>
+    <th>Throughput (Gbps)</th>
+    <th>Throughput/Watt (Gbps/W)</th>
+    <th>Throughput/Area (Gbps/F<sup>2</sup>)</th>
+  </tr>
+  <tr>
+    <td>65nm ASIC [1]</td>
+    <td>1K</td>
+    <td>48</td>
+    <td>-</td>
+    <td>7,619</td>
+  </tr>
+  <tr>
+    <td>SHINE-1 [2]</td>
+    <td>2K</td>
+    <td>54</td>
+    <td>263</td>
+    <td>21,916</td>
+  </tr>
+  <tr>
+    <td>SHINE-2 [2]</td>
+    <td>2K</td>
+    <td>33.4</td>
+    <td>311</td>
+    <td>22,227</td>
+  </tr>
+  <tr>
+    <td>**HashPIM (1 XB)**</td>
+    <td rowspan="2" align="center">**333**</td>
+    <td>39.2</td>
+    <td rowspan="2" align="center">**1,422**</td>
+    <td rowspan="2" align="center">**9,354**</td>
+  </tr>
+  <tr>
+    <td>**HashPIM (2 XB)**</td>
+    <td>78.4</td>
+  </tr>
+</table>
+
 
 ## User Information
 ### Dependencies
