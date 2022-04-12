@@ -51,7 +51,7 @@ The results for each SHA3 step for a single round:
 <img src="https://latex.codecogs.com/svg.image?\bg{black}\color{DarkBlue}&space;{Tput_{Unit}=\frac{r}{Latency_{Round}}*f}&space;\\\\\color{DarkBlue}&space;{Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}}&space;\\\\\color{DarkBlue}&space;{Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" title="https://latex.codecogs.com/svg.image?\bg{black}\color{DarkBlue} {Tput_{Unit}=\frac{r}{Latency_{Round}}*f} \\\\\color{DarkBlue} {Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}} \\\\\color{DarkBlue} {Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" />
 
 
-
+Assuming *r*=1088 (SHA3-256), and MAGIC<sup>[1]</sup> gate parameters of 3*ns* delay (333*MHz*) and 6.4*fJ* energy<sup>[2]</sup>.
 
 
 ### Performance Comparison of SHA-3 Hardware Designs:
@@ -98,7 +98,7 @@ The results for each SHA3 step for a single round:
   </tr>
 </table>
 
-Note: our design was calculated for a single *XB*, containing 378 *Unit*s, to compare performance on a single SHA3-256 round, corresponding to *r*=1088.
+Note that HashPIM design was evaluated within a single *XB*, containing 378 *Unit*s, to compare a single SHA3-256 round performance.
 
 
 ## User Information
