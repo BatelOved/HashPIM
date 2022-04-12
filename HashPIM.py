@@ -58,11 +58,16 @@ def HashPIM(sim: Simulator, m: int, n: int):
             for i in range(ceil(log2(w))):
                 sim.memory[sim.row_partition_starts[sim.kr] + i, sim.relToAbsCol(cp, j)] = int(format((ROT[j]),'06b')[ceil(log2(w))-i-1])
 
-    sim.perform(ParallelOperation([Operation(GateType.INIT0, GateDirection.IN_ROW, [], [sim.c-1], 
-            sum([[j + sim.row_partition_starts[rp] for j in range(w)] for rp in range(sim.kr)], []))]))
+    # Storing zeros in the last column of the crossbar array
+    for j in range(w):
+        for rp in range(sim.kr):
+            sim.memory[sim.relToAbsRow(rp, j), sim.c-1] = 0
 
-    sim.perform(ParallelOperation([Operation(GateType.INIT0, GateDirection.IN_COLUMN, [], [sim.r-1], 
-            sum([[j + sim.col_partition_starts[cp] for j in range(b // w)] for cp in range(sim.kc)], []))]))
+    # Storing zeros in the last row of the crossbar array
+    for j in range(b // w):
+        for cp in range(sim.kc):
+            sim.memory[sim.r-1, sim.relToAbsCol(cp, j)] = 0
+
 
     for ir in range(Rnd):
         HashPIM_f(sim, m, n, ir, Rnd, w, b)

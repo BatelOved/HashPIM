@@ -114,4 +114,4 @@ def testHashPIM(r: int, digest: int):
     print(f'Success with total {sim.latency} cycles and {sim.energy} gates\n')
     print('Results (1 round):')
     print(f'Single Unit: {sim.latency//Rnd} cycles and {sim.energy//(N_u*Rnd)} gates')
-    print(f'Single XB (378 Units): {sim.latency//Rnd} cycles and {sim.energy//Rnd} gates\n')
+    print(f'Single XB ({N_u} Units): {sim.latency//Rnd} cycles and {sim.energy//Rnd} gates\n')
