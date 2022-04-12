@@ -31,7 +31,11 @@ The results for a single unit, for one SHA3 round (out of 24):
     <th><i>f</i> (MHz)</th>
     <th>Tput (Gbps)</th>
     <th>Tput/W (Gbps/W)</th>
+<<<<<<< HEAD
     <th>Tput/Area (bps/<i>F</i><sup>2</sup>)</th>
+=======
+    <th>Tput/Area (Gbps/F<sup>2</sup>)</th>
+>>>>>>> 7d5a2e728ac72241f553fb3da78388c316434009
   </tr>
   <tr>
     <td align="left">65nm ASIC [1]</td>
