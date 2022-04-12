@@ -27,10 +27,10 @@ def testHashPIM(r: int, digest: int):
 
 
     Simulator parameters:
-    :param row: the number of memristive rows in a the crossbar array e.g., 512, 1024
-    :param col: the number of memristive columns in a the crossbar array e.g., 512, 1024
-    :param r_u: the number of SHA-3 units in a crossbar array row (optimal value: floor((row-log(w)-1)/m))
-    :param c_u: the number of SHA-3 units in a crossbar array column (optimal value: floor((col-Rnd-1)/n))
+    :param row: the number of memristive rows in the crossbar array e.g., 512, 1024
+    :param col: the number of memristive columns in the crossbar array e.g., 512, 1024
+    :param r_u: the number of SHA-3 units vertically in the crossbar array (optimal value: floor((row-log(w)-1)/m))
+    :param c_u: the number of SHA-3 units horizontally in the crossbar array (optimal value: floor((col-Rnd-1)/n))
     """
 
     row = 1024
