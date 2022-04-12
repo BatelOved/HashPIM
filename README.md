@@ -28,7 +28,7 @@ The results for a single unit, for one SHA3 round (out of 24):
 <table>
   <tr>
     <th>Work</th>
-    <th>Frequency (MHz)</th>
+    <th><i>f</i> (MHz)</th>
     <th>Throughput (Gbps)</th>
     <th>Throughput/Watt (Gbps/W)</th>
     <th>Throughput/Area (Gbps/F<sup>2</sup>)</th>
@@ -55,15 +55,15 @@ The results for a single unit, for one SHA3 round (out of 24):
     <td>22,227</td>
   </tr>
   <tr>
-    <td>**HashPIM (1 XB)**</td>
-    <td rowspan="2" align="center">**333**</td>
-    <td>39.2</td>
-    <td rowspan="2" align="center">**1,422**</td>
-    <td rowspan="2" align="center">**9,354**</td>
+    <td><b>HashPIM (1 XB)</b></td>
+    <td rowspan="2" align="center"><b>333</b></td>
+    <td><b>39.2</b></td>
+    <td rowspan="2" align="center"><b>1,422</b></td>
+    <td rowspan="2" align="center"><b>9,354</b></td>
   </tr>
   <tr>
-    <td>**HashPIM (2 XB)**</td>
-    <td>78.4</td>
+    <td><b>HashPIM (2 XB)</b></td>
+    <td><b>78.4</b></td>
   </tr>
 </table>
 
