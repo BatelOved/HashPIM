@@ -7,7 +7,7 @@ This is a logic simulator to verify the theoretical results (latency, energy, an
 ## Results
 | Algorithm | Latency (Cycles) | Gates | Area (Memristors) | Partitions | Gates |
 | ---- | :----: | :----: | :----: | :----: | :----: |
-| **HashPIM** | **3,494** | **119,571** | **1024<sup>2</sup>** | **378** | **XOR/NOR/NOT/OR** |
+| HashPIM | 3,494 | 119,571 | 1024<sup>2</sup> | 378 | XOR/NOR/NOT/OR |
 
 The results for a single unit, for one SHA3 round (out of 24):
 
@@ -26,12 +26,12 @@ The results for a single unit, for one SHA3 round (out of 24):
 ### Performance Comparison of SHA-3 Hardware Designs:
 
 | Work | Frequency (MHz) | Throughput (Gbps) | Throughput/Watt (Gbps/W) | Throughput/Area (Gbps/F<sup>2</sup>) |
-| :----: | :----: | :----: | :----: | :----: |
+| :---- | :----: | :----: | :----: | :----: |
 | 65nm ASIC [1] | 1K | 48 | - | 7,619 |
 | SHINE-1 [2] | 2K | 33.4 | 263 | 21,916 |
 | SHINE-2 [2] | 2K | 54 | 311 | 22,227 |
-| **HashPIM 1XB** | **333** | **39.2** | **1,422** | **9,354** |
-| **HashPIM 2XB** | **333** | **78.4** | **1,422** | **9,354** |
+| **HashPIM (1 XB)** |/2. **333** | **39.2** |/2. **1,422** |/2. **9,354** |
+| **HashPIM (2 XB)** | **78.4** |
 
 ## User Information
 ### Dependencies
@@ -59,7 +59,7 @@ The implementation is divided into the following files:
 3. `TestHashPIM.py`. Tests the HashPIM algorithm for varying (r, digest)={(1152,224),(1088,256),(832,384),(576,512)}.
 4. `Utilities.py`. Simplify the use of the logic functions within the memristive crossbar array.
 
-## References
+### References
 
 [1] M. M. Wong et al., “A new high throughput and area efficient SHA-3 implementation,” ISCAS, 2018.
 
