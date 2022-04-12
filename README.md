@@ -5,13 +5,40 @@ This is a logic simulator to verify the theoretical results (latency, energy, an
 `B. Oved, O. Leitersdorf, R. Ronen, and S. Kvatinsky, “HashPIM: High-Throughput SHA-3 via Memristive Digital Processing-in-Memory,” 2022.`
 
 ## Results
-| Algorithm | Latency (Cycles) | Gates | Area (Memristors) | Partitions | Gates |
-| ---- | :----: | :----: | :----: | :----: | :----: |
-| HashPIM | 3,494 | 119,571 | 1024<sup>2</sup> | 378 | XOR/NOR/NOT/OR |
 
-The results for a single unit, for one SHA3 round (out of 24):
+The results for one SHA3 round (out of 24):
 
-| Step | Latency (Cycles) | Gates |
+<table>
+  <tr>
+    <th>Entity</th>
+    <th>Latency (Cycles)</th>
+    <th>#Gates</th>
+    <th>Area (Memristors)</th>
+    <th>Units</th>
+    <th>Gates</th>
+  </tr>
+  <tr>
+    <td align="left">1 Unit</td>
+    <td rowspan="2" align="center">3,494</td>
+    <td align="center">119,571</td>
+    <td align="center">72x37</td>
+    <td align="center">1</td>
+    <td rowspan="2" align="center">XOR/NOR/NOT/OR</td>
+  </tr>
+  <tr>
+    <td align="left">1 XB</td>
+    <td align="center">45,197,903</td>
+    <td align="center">1024x1024</td>
+    <td align="center">378</td>
+  </tr>
+</table>
+
+Note: memristors's area is equivalent to 4*F*<sup>2</sup>.
+
+
+The results for each SHA3 step for a single round: 
+
+| Step | Latency (Cycles) | #Gates |
 | :---- | :----: | :----: |
 | Theta | 330 | 15,127 |
 | Rho | 2,911 | 82,300 |
@@ -21,7 +48,11 @@ The results for a single unit, for one SHA3 round (out of 24):
 | **Total** | **3,494** | **119,571** |
 
 ## Evaluation
-<img src="https://latex.codecogs.com/svg.image?\bg{black}{\color{DarkBlue}&space;Tput_{Unit}=\frac{r}{Latency_{Round}}*f}&space;\\\\{\color{DarkBlue}&space;Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}}&space;\\\\{\color{DarkBlue}&space;Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" title="https://latex.codecogs.com/svg.image?\bg{black}{\color{DarkBlue} Tput_{Unit}=\frac{r}{Latency_{Round}}*f} \\\\{\color{DarkBlue} Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}} \\\\{\color{DarkBlue} Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" />
+<img src="https://latex.codecogs.com/svg.image?\bg{black}\color{DarkBlue}&space;{Tput_{Unit}=\frac{r}{Latency_{Round}}*f}&space;\\\\\color{DarkBlue}&space;{Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}}&space;\\\\\color{DarkBlue}&space;{Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" title="https://latex.codecogs.com/svg.image?\bg{black}\color{DarkBlue} {Tput_{Unit}=\frac{r}{Latency_{Round}}*f} \\\\\color{DarkBlue} {Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}} \\\\\color{DarkBlue} {Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" />
+
+
+
+
 
 ### Performance Comparison of SHA-3 Hardware Designs:
 
