@@ -21,20 +21,55 @@ def fromBitsToHex(bit_array):
 def testHashPIM(r: int, digest: int):
     """
     Tests the HashPIM algorithm
+    :param r: the SHA-3 rate = {1152,1088,832,576}
+    :param digest: the SHA-3 hash value size = {224,256,384,512}
+
+
+
+    Simulator parameters:
+    :param row: the number of memristive rows in a the crossbar array e.g., 512, 1024
+    :param col: the number of memristive columns in a the crossbar array e.g., 512, 1024
+    :param r_u: the number of SHA-3 units in a crossbar array row (optimal value: floor((row-log(w)-1)/m))
+    :param c_u: the number of SHA-3 units in a crossbar array column (optimal value: floor((col-Rnd-1)/n))
     """
 
-    # The parameters for the test
     row = 1024
     col = 1024
     r_u = 14
     c_u = 27
+
+    # Total number of SHA-3 units in a crossbar array
     N_u = r_u * c_u
-    m = 72
-    n = 37
+
+
+    """
+    SHA-3 constants:
+    :param b: the Keccak-f internal state size
+    :param w: the Keccak-f lane size
+    :param Rnd: Keccak-f total rounds
+    """
+
     b = 1600
     w = 64
     Rnd = 24
 
+
+    """
+    HashPIM constants:
+    :param m: the number of rows in each SHA-3 unit
+    :param n: the number of columns in each SHA-3 unit
+    """
+
+    m = 72
+    n = 37
+
+
+    hash_param = ((1152,224),(1088,256),(832,384),(576,512))
+    
+
+    if ((r, digest) not in hash_param):
+        print("Error! allowed only: (r, digest)={(1152,224),(1088,256),(832,384),(576,512)}\n")
+        quit()
 
     print(f'HashPIM: SHA3-{digest}')
     print(f'Parameters: rows={row}, columns={col}, SHA-3 units={N_u}, r={r}, hash value size={digest}\n')

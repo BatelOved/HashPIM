@@ -5,7 +5,7 @@ from enum import Enum
 
 class GateType(Enum):
     """
-    Represents a type of gate out of the supported stateful gates.
+    Represents a type of gate out of the supported stateful gates
     """
 
     NOT = 0
@@ -233,32 +233,3 @@ class Simulator:
                     self.memory[mask, output] = True
                 else:
                     self.memory[output, mask] = True
-
-    def storeIntegerStrided(self, x: int, loc: int, row: int):
-        """
-        -- Only to be used by the testing environment --
-        Writes the integer x in a strided representation with intra-partition index loc (horizontally), in the given row.
-        Note: MSB stored in partition 0
-        :param x: the integer (kr-bit)
-        :param loc: the intra-partition index (horizontal)
-        :param row: the row containing the number
-        """
-
-        for i in range(self.kc):
-            self.memory[row][self.relToAbsCol(i, loc)] = bool(x & (1 << (self.kc - i - 1)))
-
-    def loadIntegerStrided(self, loc: int, row: int):
-        """
-        -- Only to be used by the testing environment --
-        Reads the integer x in a strided representation with intra-partition index loc (horizontally), from the given row.
-        Note: MSB stored in partition 0
-        :param loc: the intra-partition index (horizontal)
-        :param row: the row containing the number
-        """
-
-        x = 0
-
-        for i in range(self.kc):
-            x += self.memory[row][self.relToAbsCol(i, loc)].item() << (self.kc - i - 1)
-
-        return x

@@ -5,7 +5,7 @@ from math import ceil, log2
 
 def HashPIM(sim: Simulator, m: int, n: int):
     """
-    Performs the HashPIM algorithm of SHA-3.
+    Performs the HashPIM algorithm of SHA-3
     :param sim: the simulation environment
     :param m: the number of rows in each SHA-3 unit
     :param n: the number of columns in each SHA-3 unit
@@ -46,44 +46,48 @@ def HashPIM(sim: Simulator, m: int, n: int):
     sim.kc = sim.kc - 1
     sim.kr = sim.kr - 1
 
-    # Storing the round constants (RC) used in Iota step, in the crossbar array 
+    # Storing the round constants (RC) used in Iota step, in the crossbar array
+    # Note: Performed one time for the crossbar array, hence doesn't count in the latency and energy evaluation
     for j in range(w):
         for ir in range(Rnd):
             for rp in range(sim.kr):
                 sim.memory[sim.relToAbsRow(rp, j), sim.col_partition_starts[sim.kc] + ir] = int(format((RC[ir]),'064b')[w-j-1])
 
     # Storing the rotation values (ROT) used in Rho step, in the crossbar array 
+    # Note: Performed one time for the crossbar array, hence doesn't count in the latency and energy evaluation
     for j in range(b // w):
         for cp in range(sim.kc):
             for i in range(ceil(log2(w))):
                 sim.memory[sim.row_partition_starts[sim.kr] + i, sim.relToAbsCol(cp, j)] = int(format((ROT[j]),'06b')[ceil(log2(w))-i-1])
 
     # Storing zeros in the last column of the crossbar array
+    # Note: Performed one time for the crossbar array, hence doesn't count in the latency and energy evaluation
     for j in range(w):
         for rp in range(sim.kr):
             sim.memory[sim.relToAbsRow(rp, j), sim.c-1] = 0
 
     # Storing zeros in the last row of the crossbar array
+    # Note: Performed one time for the crossbar array, hence doesn't count in the latency and energy evaluation
     for j in range(b // w):
         for cp in range(sim.kc):
             sim.memory[sim.r-1, sim.relToAbsCol(cp, j)] = 0
 
 
     for ir in range(Rnd):
-        HashPIM_f(sim, m, n, ir, Rnd, w, b)
+        HashPIM_f(sim, m, n, b, w, Rnd, ir)
 
 
 
-def HashPIM_f(sim: Simulator, m: int, n: int, ir: int, Rnd: int, w: int, b: int):
+def HashPIM_f(sim: Simulator, m: int, n: int, b: int, w: int, Rnd: int, ir: int):
     """
-    Performs the HashPIM algorithm of SHA-3.
+    Performs the HashPIM algorithm of SHA-3
     :param sim: the simulation environment
     :param m: the number of rows in each SHA-3 unit
     :param n: the number of columns in each SHA-3 unit
-    :param ir: the Keccak-f round iterator
+    :param b: the Keccak-f internal state size
+    :param w: the Keccak-f lane size
     :param Rnd: Keccak-f total rounds
-    :param w: the Keccak-f lane length
-    :param b: the Keccak-f internal state length
+    :param ir: the Keccak-f round iterator
     """
     
     x = 5
