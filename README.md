@@ -65,21 +65,21 @@ Assuming *r*=1088 (SHA3-256), and MAGIC<sup>[1]</sup> gate parameters of 3*ns* d
     <th>Tput/Area (bps/<i>F</i><sup>2</sup>)</th>
   </tr>
   <tr>
-    <td align="left">65nm ASIC [1]</td>
+    <td align="left">65nm ASIC<sup>[3]</sup></td>
     <td align="center">1K</td>
     <td align="center">48</td>
     <td align="center">-</td>
     <td align="center">7,619</td>
   </tr>
   <tr>
-    <td align="left">SHINE-1 [2]</td>
+    <td align="left">SHINE-1<sup>[4]</sup></td>
     <td align="center">2K</td>
     <td align="center">54</td>
     <td align="center">263</td>
     <td align="center">21,916</td>
   </tr>
   <tr>
-    <td align="left">SHINE-2 [2]</td>
+    <td align="left">SHINE-2<sup>[4]</sup></td>
     <td align="center">2K</td>
     <td align="center">33.4</td>
     <td align="center">311</td>
@@ -129,6 +129,10 @@ The implementation is divided into the following files:
 
 ### References
 
-[1] M. M. Wong et al., “A new high throughput and area efficient SHA-3 implementation,” ISCAS, 2018.
+[1] S. Kvatinsky et al., “MAGIC—memristor-aided logic,” TCAS-II, 2014.
 
-[2] K. Nagarajan et al., “SHINE: A novel SHA-3 implementation using reram-based in-memory computing,” ISLPED, 2019.
+[2] M. S. Q. Truong et al., “RACER: Bit-pipelined processing using resistive memory,” in MICRO, 2021.
+
+[3] M. M. Wong et al., “A new high throughput and area efficient SHA-3 implementation,” ISCAS, 2018.
+
+[4] K. Nagarajan et al., “SHINE: A novel SHA-3 implementation using reram-based in-memory computing,” ISLPED, 2019.
