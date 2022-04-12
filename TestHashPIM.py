@@ -25,24 +25,22 @@ def testHashPIM(r: int, digest: int):
 
     # The parameters for the test
     row = 1024
-    kr = 14
     col = 1024
-    kc = 27
-    b = 1600
-    w = 64
-    m = 72
-    n = 37
-    Rnd = 24
     r_u = 14
     c_u = 27
     N_u = r_u * c_u
+    m = 72
+    n = 37
+    b = 1600
+    w = 64
+    Rnd = 24
 
 
     print(f'HashPIM: SHA3-{digest}')
-    print(f'Parameters: rows={row}, columns={col}, SHA-3 units={N_u}, r={r}, digest={digest}\n')
+    print(f'Parameters: rows={row}, columns={col}, SHA-3 units={N_u}, r={r}, hash value size={digest}\n')
 
 
-    sim = Simulator([m] * kr + [row - m * kr], [n] * kc + [col - n * kc], device=device)
+    sim = Simulator([m] * r_u + [row - m * r_u], [n] * c_u + [col - n * c_u], device=device)
 
     message = torch.zeros(size=(r_u, c_u, b), dtype=torch.int, device=device)
     message_padded = torch.zeros(size=(r_u, c_u, b), dtype=torch.int, device=device)
@@ -114,5 +112,6 @@ def testHashPIM(r: int, digest: int):
 
 
     print(f'Success with total {sim.latency} cycles and {sim.energy} gates\n')
-    print(f'Single XB (1 round): {sim.latency//Rnd} cycles and {sim.energy//Rnd} gates')
-    print(f'Single Unit (1 round): {sim.latency//Rnd} cycles and {sim.energy//(N_u*Rnd)} gates\n')
+    print('one round results:')
+    print(f'Single Unit: {sim.latency//Rnd} cycles and {sim.energy//(N_u*Rnd)} gates')
+    print(f'Single XB (378 Units): {sim.latency//Rnd} cycles and {sim.energy//Rnd} gates\n')
