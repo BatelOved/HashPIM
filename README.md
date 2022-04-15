@@ -74,14 +74,14 @@ Assuming e.g., *r*=1088 (SHA3-256), and MAGIC<sup>[1]</sup> gate parameters of 3
   <tr>
     <td align="left">SHINE-1<sup>[4]</sup></td>
     <td align="center">2K</td>
-    <td align="center">54</td>
+    <td align="center">33.4</td>
     <td align="center">263</td>
     <td align="center">21,916</td>
   </tr>
   <tr>
     <td align="left">SHINE-2<sup>[4]</sup></td>
     <td align="center">2K</td>
-    <td align="center">33.4</td>
+    <td align="center">54</td>
     <td align="center">311</td>
     <td align="center">22,227</td>
   </tr>
