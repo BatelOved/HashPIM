@@ -27,7 +27,7 @@ The results for a single crossbar (*XB*) for one SHA3 round (out of 24):
   </tr>
   <tr>
     <td align="left">1 XB</td>
-    <td align="center">45,197,903</td>
+    <td align="center">45,197,838</td>
     <td align="center">1024x1024</td>
     <td align="center">378</td>
   </tr>
@@ -106,6 +106,7 @@ Note that HashPIM design was evaluated within a single *XB*, containing 378 *Uni
 In order to use the project, you will need:
 1. python3
 2. pytorch
+3. cryptodome
 
 ### User Manual
 Running `python TestHashPIM_SHA3-224.py` will run HashPIM for SHA3-224 on the simulator for a random 378 sample of bit arrays with a random size each (limited to size r-4). The simulator verifies the correctness

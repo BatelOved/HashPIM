@@ -5,17 +5,8 @@ from HashPIM import *
 from Cryptodome.Hash import SHA3_224, SHA3_256, SHA3_384, SHA3_512
 
 
-
 device = torch.device('cpu')
 
-
-def fromBitsToHex(bit_array):
-    chars = []
-    for b in range(len(bit_array) // 8):
-        byte = bit_array[b*8:(b+1)*8]
-        byte = byte[::-1]
-        chars.append("{:02x}".format(int(''.join([str(bit) for bit in byte]), 2)))
-    return ''.join(chars)
 
 
 def testHashPIM(r: int, digest: int):
@@ -72,7 +63,7 @@ def testHashPIM(r: int, digest: int):
         quit()
 
     print(f'HashPIM: SHA3-{digest}')
-    print(f'Parameters: rows={row}, columns={col}, SHA-3 units={N_u}, r={r}, hash value size={digest}\n')
+    print(f'Parameters: rows={row}, columns={col}, SHA-3 Units={N_u}, r={r}, hash value size={digest}\n')
 
 
     sim = Simulator([m] * r_u + [row - m * r_u], [n] * c_u + [col - n * c_u], device=device)
@@ -85,7 +76,7 @@ def testHashPIM(r: int, digest: int):
 
     for i in range(r_u):
         for j in range(c_u):
-            # Construct random bit array (limited to r-4 size)
+            # Construct random bit array (limited to r-4 size, and to bytes for compatability with Cryptodome)
             message_len = random.randrange(0, r-4, 8)
             message[i][j][:message_len] = torch.rand(size=(message_len, ), device=device) < 0.5
 
@@ -95,21 +86,19 @@ def testHashPIM(r: int, digest: int):
             message_padded[i][j][message_len+2] = 1
             message_padded[i][j][r-1] = 1
 
-            message_in_bytes = [sum(b*2**x for b,x in zip(byte,range(8))) for byte in zip(*([iter(message[i][j][:message_len])]*8))]
-            message_in_bytes = [int(byte) for byte in message_in_bytes]
-            message_in_bytes = bytearray(message_in_bytes)
+            message_in_bytes = bytearray(sum(bit*(2**k) for bit,k in zip(byte,range(8))) for byte in zip(*([iter(message[i][j][:message_len])]*8)))
 
             if digest == 224:
-                hash_value[i][j] = (SHA3_224.new(message_in_bytes)).hexdigest()
+                hash_value[i][j] = SHA3_224.new(message_in_bytes).hexdigest()
 
             elif digest == 256:
-                hash_value[i][j] = (SHA3_256.new(message_in_bytes)).hexdigest()
+                hash_value[i][j] = SHA3_256.new(message_in_bytes).hexdigest()
 
             elif digest == 384:
-                hash_value[i][j] = (SHA3_384.new(message_in_bytes)).hexdigest()
+                hash_value[i][j] = SHA3_384.new(message_in_bytes).hexdigest()
 
             elif digest == 512:
-                hash_value[i][j] = (SHA3_512.new(message_in_bytes)).hexdigest()
+                hash_value[i][j] = SHA3_512.new(message_in_bytes).hexdigest()
 
 
     # Store the vectors in the memory
@@ -124,8 +113,8 @@ def testHashPIM(r: int, digest: int):
     HashPIM(sim, m, n)
 
 
+    out_in_bits = [0] * digest
     output = [[0 for i in range(c_u)] for j in range(r_u)]
-    temp = [0] * digest
 
 
     for r_i in range(r_u):
@@ -137,8 +126,10 @@ def testHashPIM(r: int, digest: int):
                     if cnt > digest:
                         break
                 
-                    temp[i+w*j] = int(sim.memory[i+r_i*m][j+c_i*n])
-                    output[r_i][c_i] = fromBitsToHex(temp)
+                    out_in_bits[i+w*j] = int(sim.memory[i+r_i*m][j+c_i*n])
+
+            out_in_bytes = bytearray(sum(bit*(2**k) for bit,k in zip(byte,range(8))) for byte in zip(*([iter(out_in_bits)]*8)))
+            output[r_i][c_i] = "".join(["%02x" % it for it in out_in_bytes])
 
 
     for i in range(r_i):
