@@ -12,7 +12,7 @@ The results for a single crossbar (*XB*) for one SHA3 round (out of 24):
   <tr>
     <th>Entity</th>
     <th>Latency (Cycles)</th>
-    <th>#Gates</th>
+    <th>#Switchings</th>
     <th>Area (Memristors)</th>
     <th>Units</th>
     <th>Gates</th>
