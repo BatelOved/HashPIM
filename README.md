@@ -38,7 +38,7 @@ Note: memristors's area is equivalent to 4*F*<sup>2</sup>.
 
 The results for each SHA3 step for a single round: 
 
-| Step | Latency (Cycles) | #Gates |
+| Step | Latency (Cycles) | #Switchings |
 | :---- | :----: | :----: |
 | Theta | 330 | 15,127 |
 | Rho | 2,911 | 82,300 |
