@@ -12,9 +12,8 @@ class GateType(Enum):
     NOR = 1
     NAND = 2
     OR = 3
-    MIN3 = 4
-    INIT0 = 5
-    INIT1 = 6
+    INIT0 = 4
+    INIT1 = 5
 
 
 class GateDirection(Enum):
@@ -169,7 +168,6 @@ class Simulator:
 
             if operation.gateDirection == GateDirection.IN_ROW:
                 assert((self.memory[mask, operation.outputs[0]] == True).all())
-                assert((self.memory[mask, operation.outputs[0]] == True).all())
                 self.memory[mask, operation.outputs[0]] = torch.bitwise_and(self.memory[mask, operation.outputs[0]],
                 torch.bitwise_not(torch.bitwise_or(self.memory[mask, operation.inputs[0]], self.memory[mask, operation.inputs[1]])))
             else:
@@ -196,25 +194,6 @@ class Simulator:
                 assert((self.memory[operation.outputs[0], mask] == True).all())
                 self.memory[operation.outputs[0], mask] = torch.bitwise_and(self.memory[operation.outputs[0], mask],
                 torch.bitwise_or(self.memory[operation.inputs[0], mask], self.memory[operation.inputs[1], mask]))
-
-        elif operation.gateType == GateType.MIN3:
-
-            if operation.gateDirection == GateDirection.IN_ROW:
-                self.memory[mask, operation.outputs[0]] = torch.bitwise_and(self.memory[mask, operation.outputs[0]],
-                torch.bitwise_not(torch.bitwise_or(torch.bitwise_and(self.memory[mask, operation.inputs[0]], self.memory[mask, operation.inputs[1]]),
-                                     torch.bitwise_or(
-                                         torch.bitwise_and(self.memory[mask, operation.inputs[0]], self.memory[mask, operation.inputs[2]]),
-                                         torch.bitwise_and(self.memory[mask, operation.inputs[1]], self.memory[mask, operation.inputs[2]])
-                                     ))))
-            else:
-                self.memory[operation.outputs[0], mask] = torch.bitwise_and(self.memory[operation.outputs[0], mask],
-                torch.bitwise_not(torch.bitwise_or(self.memory[operation.inputs[0], mask], self.memory[operation.inputs[1], mask])))
-                self.memory[operation.outputs[0], mask] = torch.bitwise_and(self.memory[operation.outputs[0], mask],
-                torch.bitwise_not(torch.bitwise_or(torch.bitwise_and(self.memory[operation.inputs[0], mask], self.memory[operation.inputs[1], mask]),
-                                     torch.bitwise_or(
-                                         torch.bitwise_and(self.memory[operation.inputs[0], mask], self.memory[operation.inputs[2], mask]),
-                                         torch.bitwise_and(self.memory[operation.inputs[1], mask], self.memory[operation.inputs[2], mask])
-                                     ))))
 
         elif operation.gateType == GateType.INIT0:
 

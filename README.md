@@ -23,7 +23,7 @@ The results for a single crossbar (*XB*) for one SHA3 round (out of 24):
     <td align="center">119,571</td>
     <td align="center">72x37</td>
     <td align="center">1</td>
-    <td rowspan="2" align="center">XOR/NOR/NOT/OR</td>
+    <td rowspan="2" align="center">MAGIC<sup>[1]</sup> NOT/NOR, FELIX<sup>[2]</sup> OR/XOR</td>
   </tr>
   <tr>
     <td align="left">1 XB</td>
@@ -51,7 +51,7 @@ The results for each SHA3 step for a single round:
 <img src="https://latex.codecogs.com/svg.image?\bg{black}\color{DarkBlue}&space;{Tput_{Unit}=\frac{r}{Latency_{Round}}*f}&space;\\\\\color{DarkBlue}&space;{Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}}&space;\\\\\color{DarkBlue}&space;{Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" title="https://latex.codecogs.com/svg.image?\bg{black}\color{DarkBlue} {Tput_{Unit}=\frac{r}{Latency_{Round}}*f} \\\\\color{DarkBlue} {Tput_{System}=Tput_{Unit}*U_{XB}*N_{XB}} \\\\\color{DarkBlue} {Power_{System}=\frac{Tput_{System}*Energy_{Unit}}{r}}" />
 
 
-Assuming e.g., *r*=1088 (SHA3-256), and MAGIC<sup>[1]</sup> gate parameters of 3*ns* delay (333*MHz*) and 6.4*fJ* energy<sup>[2]</sup>.
+Assuming e.g., *r*=1088 (SHA3-256), and MAGIC<sup>[1]</sup> gate parameters of 3*ns* delay (333*MHz*) and 6.4*fJ* energy<sup>[3]</sup>.
 
 
 ### Performance Comparison of SHA-3 Hardware Designs:
@@ -65,21 +65,21 @@ Assuming e.g., *r*=1088 (SHA3-256), and MAGIC<sup>[1]</sup> gate parameters of 3
     <th>Tput/Area (bps/<i>F</i><sup>2</sup>)</th>
   </tr>
   <tr>
-    <td align="left">65nm ASIC<sup>[3]</sup></td>
+    <td align="left">65nm ASIC<sup>[4]</sup></td>
     <td align="center">1K</td>
     <td align="center">48</td>
     <td align="center">-</td>
     <td align="center">7,619</td>
   </tr>
   <tr>
-    <td align="left">SHINE-1<sup>[4]</sup></td>
+    <td align="left">SHINE-1<sup>[5]</sup></td>
     <td align="center">2K</td>
     <td align="center">33.4</td>
     <td align="center">263</td>
     <td align="center">21,916</td>
   </tr>
   <tr>
-    <td align="left">SHINE-2<sup>[4]</sup></td>
+    <td align="left">SHINE-2<sup>[5]</sup></td>
     <td align="center">2K</td>
     <td align="center">54</td>
     <td align="center">311</td>
@@ -110,16 +110,16 @@ In order to use the project, you will need:
 
 ### User Manual
 Running `python TestHashPIM_SHA3-224.py` will run HashPIM for SHA3-224 on the simulator for a random 378 sample of bit arrays with a random size each (limited to size r-4). The simulator verifies the correctness
-of the simulator output and counts the exact number of cycles and gates used. As HashPIM is deterministic, this cycle count is identical for all samples.
+of the simulator output and counts the exact number of cycles and memristors' switchings made. As HashPIM is deterministic, this cycle count is identical for all samples.
 
 Running `python TestHashPIM_SHA3-256.py` will run HashPIM for SHA3-256 on the simulator for a random 378 sample of bit arrays with a random size each (limited to size r-4). The simulator verifies the correctness
-of the simulator output and counts the exact number of cycles and gates used. As HashPIM is deterministic, this cycle count is identical for all samples.
+of the simulator output and counts the exact number of cycles and memristors' switchings made. As HashPIM is deterministic, this cycle count is identical for all samples.
 
 Running `python TestHashPIM_SHA3-384.py` will run HashPIM for SHA3-384 on the simulator for a random 378 sample of bit arrays with a random size each (limited to size r-4). The simulator verifies the correctness
-of the simulator output and counts the exact number of cycles and gates used. As HashPIM is deterministic, this cycle count is identical for all samples.
+of the simulator output and counts the exact number of cycles and memristors' switchings made. As HashPIM is deterministic, this cycle count is identical for all samples.
 
 Running `python TestHashPIM_SHA3-512.py` will run HashPIM for SHA3-512 on the simulator for a random 378 sample of bit arrays with a random size each (limited to size r-4). The simulator verifies the correctness
-of the simulator output and counts the exact number of cycles and gates used. As HashPIM is deterministic, this cycle count is identical for all samples.
+of the simulator output and counts the exact number of cycles and memristors' switchings made. As HashPIM is deterministic, this cycle count is identical for all samples.
 
 ## Implementation Details
 The implementation is divided into the following files: 
@@ -130,10 +130,12 @@ The implementation is divided into the following files:
 
 ### References
 
-[1] S. Kvatinsky et al., “MAGIC—memristor-aided logic,” TCAS-II, 2014.
+[1] S. Kvatinsky et al., “MAGIC—memristor-aided logic,” TCAS-II, September 2014.
 
-[2] M. S. Q. Truong et al., “RACER: Bit-pipelined processing using resistive memory,” in MICRO, 2021.
+[2] S. Gupta et al., “FELIX: Fast and energy-efficient logic in memory,” ICCAD 2018.
 
-[3] M. M. Wong et al., “A new high throughput and area efficient SHA-3 implementation,” ISCAS, 2018.
+[3] M. S. Q. Truong et al., “RACER: Bit-pipelined processing using resistive memory,” MICRO 2021.
 
-[4] K. Nagarajan et al., “SHINE: A novel SHA-3 implementation using reram-based in-memory computing,” ISLPED, 2019.
+[4] M. M. Wong et al., “A new high throughput and area efficient SHA-3 implementation,” ISCAS 2018.
+
+[5] K. Nagarajan et al., “SHINE: A novel SHA-3 implementation using reram-based in-memory computing,” ISLPED 2019.
