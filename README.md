@@ -23,7 +23,7 @@ The results for a single crossbar (*XB*) for one SHA3 round (out of 24):
     <td align="center">119,571</td>
     <td align="center">72x37</td>
     <td align="center">1</td>
-    <td rowspan="2" align="center">MAGIC<sup>[1]</sup> NOT/NOR, FELIX<sup>[2]</sup> OR/XOR</td>
+    <td rowspan="2" align="center">MAGIC<sup>[1]</sup> NOT/NOR, FELIX<sup>[2]</sup> OR/NAND</td>
   </tr>
   <tr>
     <td align="left">1 XB</td>
