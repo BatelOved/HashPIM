@@ -61,7 +61,7 @@ Assuming e.g., *r*=1088 (SHA3-256), and MAGIC<sup>[1]</sup> gate parameters of 3
     <th>Work</th>
     <th><i>f</i> (MHz)</th>
     <th>Tput (Gbps)</th>
-    <th>Tput/W (Gbps/W)</th>
+    <th>Tput/Power (Gbps/W)</th>
     <th>Tput/Area (bps/<i>F</i><sup>2</sup>)</th>
   </tr>
   <tr>
